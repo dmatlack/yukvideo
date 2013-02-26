@@ -1,4 +1,4 @@
-Put movielists in this file. A movielist is a .txt file that is used by
-ffmpeg to concatinate videos. More information can be found at:
+Put movielists in this directory. A movielist is a .txt file that is used by
+ffmpeg to concatenate videos. More information can be found at:
 
 http://ffmpeg.org/trac/ffmpeg/wiki/How%20to%20concatenate%20(join,%20merge)%20media%20files
