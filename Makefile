@@ -21,7 +21,6 @@ MOVIES = $(MOVIELISTS:.txt=.mp4)
 MOVIES_FULL = $(addprefix $(MOVIES_DIR)/,$(MOVIES))
 
 default: $(MOVIES_FULL)
-	echo $(MOVIELISTS)
 	
 .PHONY: convert
 convert: $(MP4_FULL) 
