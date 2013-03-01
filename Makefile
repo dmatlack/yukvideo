@@ -1,25 +1,27 @@
 ###
 # Convert files from avchd to mp4
 ###
+SHELL := /bin/bash
 
 MTS_DIR = avchd
 MP4_DIR = mp4
 MOVIELISTS_DIR = movielists
 MOVIES_DIR = movies
 
-MTS_VIDEOS = $(shell ls $(MTS_DIR))
+MTS_VIDEOS = $(shell ls $(MTS_DIR) | grep "MTS")
 MTS_FULL = $(addprefix $(MTS_DIR)/,$(MTS_VIDEOS))
 
 MP4_VIDEOS = $(MTS_VIDEOS:.MTS=.mp4)
 MP4_FULL = $(addprefix $(MP4_DIR)/,$(MP4_VIDEOS))
 
-MOVIELISTS = $(shell ls $(MOVIELISTS_DIR))
+MOVIELISTS = $(shell ls $(MOVIELISTS_DIR) | grep "txt")
 MOVIELISTS_FULL = $(addprefix $(MOVIELISTS_DIR)/,$(MOVIELISTS))
 
 MOVIES = $(MOVIELISTS:.txt=.mp4)
 MOVIES_FULL = $(addprefix $(MOVIES_DIR)/,$(MOVIES))
 
 default: $(MOVIES_FULL)
+	echo $(MOVIELISTS)
 	
 .PHONY: convert
 convert: $(MP4_FULL) 
