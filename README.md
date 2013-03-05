@@ -19,7 +19,4 @@ To just convert all avchd files (and not build movies), run:
 Why Makefiles
 -------------
 
-Using Make allows me to avoid re-converting video files. In addition, you can
-run make and interrupt it at any time with CTRL-C. Then when you want to resume
-conversion just run make again and it will pick up at the last file that was being
-converted.
+Make handles the data dependencies, and avoids redoing any work.
