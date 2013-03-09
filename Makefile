@@ -1,5 +1,9 @@
 ###
-# Convert files from avchd to mp4
+# 1. Convert AVCHD to MP4
+# 2. Concatenate MP4 videos into movies.
+#
+# make: 1, 2
+# make convert: 1
 ###
 SHELL := /bin/bash
 
