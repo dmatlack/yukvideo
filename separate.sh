@@ -1,44 +1,49 @@
 #!/bin/sh
 
-out_dir="lists"
-mkdir -p $out_dir
-listnum="1"
+###
+###
+# Determine the videos that correspond to a game.
+#
+# This is done by looking at the creation time for each video (each
+# raw video file from the camera) and looking at the time difference
+# between consecutive videos. If the time difference is greater
+# than some threshold (e.g. 10 minutes), we say this marks the time
+# in between two games.
+###
+###
 
 function videos {
-  ls -lUT avchd | grep MTS | sed -E s/" "+/,/g | cut -d"," -f8,10
+  ls -U avchd | grep MTS
 }
 
 function outfile {
-  echo "${out_dir}/movie_${listnum}.txt"
+  echo "${outdir}/movie_${listnum}.txt"
 }
 
 function clear {
   printf "" > $1
 }
 
-curr=""
-curr_time=""
-curr_video=""
+prev_video=""
+listnum="1"
 
+outdir="lists"
+mkdir -p $outdir
 clear `outfile`
 
-for next in `videos`; do
-  next_time=`echo $next | cut -d"," -f1`
-  next_video=`echo $next | cut -d"," -f2`
+for current_video in `videos`; do
 
-  if [ "$curr" != "" ]; then
-    mp4=`echo $curr_video | tr "MTS" "mp4"`
+  if [ $prev_video ]; then
+    mp4=`echo $prev_video | tr "MTS" "mp4"`
     echo "file '../mp4/$mp4' " >> `outfile`
 
-    time_diff=`timediff/timediff $curr_time $next_time`
+    time_diff=`./td/timediff avchd/$prev_video avchd/$current_video`
 
     if [ $time_diff -gt 10 ]; then
       listnum=`expr $listnum + 1`
-       clear `outfile`
+      clear `outfile`
     fi
   fi
 
-  curr="$next"
-  curr_time="$next_time"
-  curr_video="$next_video"
+  prev_video="$current_video"
 done

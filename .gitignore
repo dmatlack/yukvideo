@@ -1,3 +1,4 @@
 *.MTS
 *.mp4
 movielists/*.txt
+lists/
